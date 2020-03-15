@@ -1,20 +1,30 @@
-let sizes = [4, 8, 15, 16, 23, 42];
+// Genereer in d3 5 circles met een x en y positie van 25* het getal in het array.
+// De 2e en 4e circles (de "even" cirkels) zijn groen gekleurd.
+// De "oneven" cirkels zijn rood gekleurd.
+// De radius van de cirkels is ook 25, zie het voorbeeld.
 
-let allPs = d3.selectAll('p');
+let myData = [1, 2, 3, 4, 5];
 
-allPs
-  .data(sizes)
-  .style('font-size', function(d) {
-    return `${d}px`
-  });
+let canvas = d3.select('#canvas');
 
-let div = d3.select('div');
+canvas.append('svg')
+  .style('width', 1000)
+  .style('height', 1000)
+  .style('background', 'purple')
 
-div.selectAll('p')
-  .data(sizes)
+let svg = canvas.selectAll('svg');
+
+svg.selectAll('circle')
+  .data(myData)
   .enter()
-  .append('p')
-  .text('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae atque, ratione, in non quas debitis minus repellat possimus vero tenetur.')
-  .style('font-size', function(d) {
-    return `${d}px`
-  });
+  .append('circle')
+  .attr('cx', function(d) {
+    return d * 25;
+  })
+  .attr('cy', function(d) {
+    return d * 25;
+  })
+  .attr('r', 25)
+  .attr('fill', function(d, i) {
+    return (i % 2 === 0) ? 'green' : 'red';
+  })
